@@ -1,0 +1,90 @@
+﻿
+@using Demo_ASP_React.DTO_ETITY;
+@{
+    var data = (List<MenuLeftEntity>)ViewBag.ListMenu;
+    var lstAll = data ?? new List<MenuLeftEntity>();
+    var currentUrl = HttpContext.Current.Request.RawUrl; //HttpContext.Current.Request.Url.AbsoluteUri;
+    var controllerName = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
+}
+
+<ul class="sidebar-menu box-menu-left" data-widget="tree">
+    @foreach (var item in lstAll.Where(d => d.Parent_ID == "").OrderBy(g => g.Display_Order))
+    {
+        var clsp = "";
+        var clspstyle = "none";
+        var lstc = lstAll.Where(d => d.Parent_ID == item.MenuID).ToList();
+        var urlP = "";
+        if (!string.IsNullOrEmpty(item.Url))
+        {
+            urlP = item.Url + "?menuId=" + item.MenuID;
+        }
+        //if (lstc.Count(d => d.Url != null && d.Url.Split('/').Length >= 2 && d.Url.Split('/')[1].ToLower() == controllerName.ToLower()) > 0)
+        if (currentUrl.Contains("?menuId="))
+        {
+            if (lstc.Count(d => d.Url != null && (d.Url + "?menuId=" + d.MenuID).ToLower() == currentUrl.ToLower()) > 0)
+            {
+                clsp = "menu-open";
+                clspstyle = "block";
+            }
+        }
+        else
+        {
+            if (lstc.Count(d => d.Url != null && d.Url.Split('/').Length >= 2 && d.Url.Split('/')[1].ToLower() == controllerName.ToLower()) > 0)
+            {
+                clsp = "menu-open";
+                clspstyle = "block";
+            }
+        }
+
+        if (lstc.Any())
+        {
+            <li class="treeview @clsp">
+                <a href="javascript:void(0)">
+                    <i class="fa fa-file-text-o"></i> <span>@item.MenuName</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu" style="display: @clspstyle">
+                    @foreach (var itemc in lstc.OrderBy(d => d.Display_Order))
+                    {
+                        var clsc = "";
+                        var url = "";
+                        if (!string.IsNullOrEmpty(itemc.Url))
+                        {
+                            url = itemc.Url + "?menuId=" + itemc.MenuID;
+                        }
+
+                        if (currentUrl.Contains("?menuId="))
+                        {
+                            if (itemc.Url != null && (itemc.Url + "?menuId=" + itemc.MenuID).ToLower() == currentUrl.ToLower())
+                            {
+                                clsc = "active";
+                            }
+                        }
+                        else
+                        {
+                            if (itemc.Url != null && itemc.Url.Split('/').Length >= 2 && itemc.Url.Split('/')[1].ToLower() == controllerName.ToLower())
+                            {
+                                clsc = "active";
+                            }
+                        }
+
+                        <li class="@clsc"><a href="@url">@itemc.MenuName</a></li>
+                    }
+                </ul>
+            </li>
+        }
+        else
+        {
+            //check active
+            var cls = "";
+            if (urlP == currentUrl)
+            {
+                cls = "active";
+            }
+            <li class="@cls"><a href="@urlP"><i class="fa fa-file-text-o"></i> <span>@item.MenuName</span></a></li>
+        }
+    }
+</ul>
+

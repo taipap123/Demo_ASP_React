@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "Quản lý Tỉnh/thành";
+}
+
+<div class="x_panel box-title">
+    <div class="col-md-6 page-title-box fixed">
+        <h4> Quản lý Tỉnh/thành</h4>
+    </div>
+    <div class="col-md-6" style="text-align: right">
+        <ol class="breadcrumb p-0 m-0">
+            <li>
+                <a href="/">Trang chủ</a>
+            </li>
+            <li class="active">
+                <span>Quản lý danh mục</span>
+            </li>
+        </ol>
+    </div>
+</div>
+<div id="root"></div>
+<input type="hidden" id="list-data-cate" value="@ViewBag.PageCategory" />
+@section Scripts{
+    <script>
+        window.PageCategory = $("#list-data-cate").val();
+    </script>
+    <script src="~/Scripts/bundles/md_lstprovince.bundle.js"></script>
+}
+

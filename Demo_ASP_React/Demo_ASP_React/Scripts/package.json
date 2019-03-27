@@ -1,0 +1,30 @@
+{
+  "name": "demo_asp_react",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "scripts": {
+    "build": "webpack --mode production"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^2.1.1",
+    "react": "^16.8.4",
+    "react-axios": "^2.0.3",
+    "react-bootstrap": "^0.32.0",
+    "react-confirm-alert": "^2.4.0",
+    "react-dom": "^16.8.4",
+    "react-select": "^2.0.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.29.6"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.2.3"
+  }
+}
